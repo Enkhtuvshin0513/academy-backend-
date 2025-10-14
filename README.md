@@ -1,1 +1,1 @@
-# academy-backend-
+# Erxes academy dasgal ajluudiin repo
