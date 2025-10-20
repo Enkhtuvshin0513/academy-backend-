@@ -49,7 +49,7 @@ const printResult = (userValue, computerValue) => {
   return `user: ${userStringValue} computer: ${computerStringValue}`;
 };
 
-const startGame = () => {
+const starRockPaper = () => {
   const userValueString = window.prompt("1 haich, 2 chuluu, 3 daawuu");
 
   const userValueInt = Number(userValueString);
