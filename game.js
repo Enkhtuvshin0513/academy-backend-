@@ -1,6 +1,4 @@
-const rockpaper = () => {
-  console.log("Haich chuluu daawuu togloh gj bn");
-};
+import { rockpaper } from "./rockpaper.js";
 
 const games = {
   rockpaper,
