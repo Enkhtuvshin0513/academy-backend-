@@ -12,24 +12,34 @@ const games = {
   dice: dice,
   number: number
 };
+
+console.log("1", games);
 // togloomiin ur dung hadgalah array zarlaj bn
 const resulArray = [];
 // toglogdoj baigaa tolgoomin neriig hadgalah huwisagch
 let currentGame = "";
 
 const playGame = () => {
+  console.log("playgame duudagdlaa");
   //togloomiin ur dung hadgalah object huwisagch zarlaw
-  gameResult = {};
+  let gameResult = {};
 
   if (currentGame) {
-    gameResult = games[gameValue]();
+    console.log("if biylj bn");
+    gameResult = games[currentGame]();
   } else {
+    console.log("else ruu orloo");
     const currentGame = window.prompt("Ymar togloom togloh we");
+    console.log("currentGameee awlaa", currentGame);
 
     gameResult = games[currentGame]();
+
+    console.log("gameResult gedeg object utgatai bolloo", gameResult);
   }
 
   resulArray.push(gameResult);
+
+  console.log("arrayd push hiigldee", resulArray);
 
   const playAgain = window.prompt(
     "zogsooh 0, oor togloom togloh bol 1, dahin togloh bol 2"
@@ -46,4 +56,5 @@ const playGame = () => {
 };
 
 playGame();
+
 console.log(resulArray);
