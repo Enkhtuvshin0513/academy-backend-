@@ -1,7 +1,20 @@
-const h1 = document.getElementById("title");
+let counter = true;
 
-const button = document.getElementById("towch");
+const h1 = document.getElementById("span");
 
-button.addEventListener("click", () => {
-  h1.innerText = "Garchig";
-});
+const plusButton = document.getElementById("plus");
+const minButton = document.getElementById("min");
+
+const plus = () => {
+  counter++;
+
+  h1.innerText = counter;
+};
+const min = () => {
+  counter--;
+
+  h1.innerText = counter;
+};
+
+plusButton.addEventListener("click", plus);
+minButton.addEventListener("click", min);
