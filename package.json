@@ -1,0 +1,21 @@
+{
+  "name": "erxes-academy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enkhtuvshin0513/academy-backend-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Enkhtuvshin0513/academy-backend-/issues"
+  },
+  "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme"
+}
