@@ -20,7 +20,11 @@ const { username, password } = await inquirer.prompt([
   // }
 ]);
 
-const userRawData = await fs.readFile("users.json", "utf8");
+const getUserDatas = async () => {
+  return await fs.readFile("users.json", "utf8");
+};
+
+const userRawData = await getUserDatas();
 
 const users = JSON.parse(userRawData);
 
