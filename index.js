@@ -23,10 +23,18 @@ const { username, password } = await inquirer.prompt([
 const getUserDatas = async () => {
   return await fs.readFile("users.json", "utf8");
 };
+let userRawData;
+let users;
 
-const userRawData = await getUserDatas();
+try {
+  userRawData = await getUserDatas();
+} catch (e) {
+  users = [{ name: username, password: password }];
+}
 
-const users = JSON.parse(userRawData);
+if (userRawData) {
+  users = JSON.parse(userRawData);
+}
 
 const user = users.find(value => {
   return value.name == username && value.password == password;
