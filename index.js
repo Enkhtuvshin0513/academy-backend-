@@ -1,25 +1,36 @@
 import fs from "node:fs/promises";
+import inquirer from "inquirer";
+
+const { username, password } = await inquirer.prompt([
+  {
+    type: "input",
+    name: "username",
+    message: "Neree oruulna uu"
+  },
+  {
+    type: "password",
+    name: "password",
+    message: "password oruulna uu"
+  }
+  // {
+  //   type: "select",
+  //   name: "action",
+  //   choices: ["Deposit", "Withdraw"],
+  //   message: "Ymar uildel hiih we"
+  // }
+]);
 
 const userRawData = await fs.readFile("users.json", "utf8");
 
-const users = new Array(JSON.parse(userRawData));
-
-const username = "Bat";
-const password = "123";
-
-// for (let i = 0; i < users.length; i++) {
-//   if (users[i].name === username && users[i].password === password) {
-//     user = users[i];
-//     userIndex = i;
-//   }
-// }
+const users = JSON.parse(userRawData);
 
 const user = users.find(value => {
-  return value.name === username && value.password === password;
+  return value.name == username && value.password == password;
 });
 
 if (!user) {
   console.log("ner eswel nuuts ug buruu bn!");
+
   process.exit();
 }
 
