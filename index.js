@@ -1,70 +1,26 @@
 import fs from "node:fs/promises";
 import inquirer from "inquirer";
 
-const { username, password } = await inquirer.prompt([
+const { auth } = await inquirer.prompt([
   {
-    type: "input",
-    name: "username",
-    message: "Neree oruulna uu"
-  },
-  {
-    type: "password",
-    name: "password",
-    message: "password oruulna uu"
+    type: "select",
+    name: "auth",
+    message: "Login Or Signup",
+    choices: ["Login", "Signup"]
   }
 ]);
 
-const getUserDatas = async () => {
-  return await fs.readFile("users.json", "utf8");
-};
-
-let userRawData;
-let users;
-
-try {
-  userRawData = await getUserDatas();
-} catch (e) {
-  users = [{ name: username, password: password }];
+if (auth === "Login") {
+  const { username, password } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "username",
+      message: "Enter your username"
+    },
+    {
+      type: "password",
+      name: "password",
+      message: "Enter your password"
+    }
+  ]);
 }
-
-if (userRawData) {
-  users = JSON.parse(userRawData);
-}
-
-const user = users.find(value => {
-  return value.name == username && value.password == password;
-});
-
-if (!user) {
-  console.log("ner eswel nuuts ug buruu bn!");
-
-  process.exit();
-}
-
-const historyRawData = await fs.readFile("history.json", "utf8");
-
-const history = JSON.parse(historyRawData);
-
-if (!history[user.name]) {
-  history[user.name] = [];
-}
-
-history[user.name].push({ amount: 1000, action: "deposit" });
-
-const historyString = JSON.stringify(history);
-
-fs.writeFile("history.json", historyString)
-  .then(() => {
-    console.log("Amjilttai bayrtai!");
-    process.exit();
-  })
-  .catch(e => {
-    console.log(e);
-    console.log("aldaa garlaa");
-  });
-
-// async await, callback
-// error handling
-// JSON
-// Array class .find
-// package
