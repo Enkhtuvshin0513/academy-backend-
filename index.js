@@ -12,17 +12,12 @@ const { username, password } = await inquirer.prompt([
     name: "password",
     message: "password oruulna uu"
   }
-  // {
-  //   type: "select",
-  //   name: "action",
-  //   choices: ["Deposit", "Withdraw"],
-  //   message: "Ymar uildel hiih we"
-  // }
 ]);
 
 const getUserDatas = async () => {
   return await fs.readFile("users.json", "utf8");
 };
+
 let userRawData;
 let users;
 
@@ -67,3 +62,9 @@ fs.writeFile("history.json", historyString)
     console.log(e);
     console.log("aldaa garlaa");
   });
+
+// async await, callback
+// error handling
+// JSON
+// Array class .find
+// package
