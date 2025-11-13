@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme",
   "dependencies": {
     "inquirer": "^12.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
