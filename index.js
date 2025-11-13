@@ -1,12 +1,52 @@
-import http from "http";
+import express from "express";
+import fs from "node:fs/promises";
 
-const server = http.createServer((req, res) => {
-  if (req.method === "GET") {
-    return res.end("Hello World GEt");
+const app = express();
+
+app.use(express.json());
+
+app.get("/get-user/:id", async (req, res) => {
+  const { id } = req.params;
+  const users = await fs.readFile("users.json").then(value => {
+    return JSON.parse(value);
+  });
+
+  const user = users.find(value => {
+    return value.id == id;
+  });
+
+  if (!user) {
+    return res.status(404).send("User not found");
   }
-  res.end("Hello World POST");
+
+  res.json(user);
 });
 
-server.listen(3000);
+app.get("/get-users", async (req, res) => {
+  const { firstName, age } = req.query;
 
-console.log("server listening on 3000");
+  const users = await fs.readFile("users.json").then(value => {
+    return JSON.parse(value);
+  });
+
+  // const filteredUsers = users.filter(value => {
+  //   return value.firstName === firstName && value.age == age;
+  // });
+
+  res.json(users);
+});
+
+app.post("/create-user", async (req, res) => {
+  console.log(req.body);
+  res.send("Success");
+});
+
+app.put("/update-user/:id", async (req, res) => {
+  console.log(req.params);
+  console.log(req.body);
+  res.send("Success");
+});
+
+app.listen(3000, () => {
+  console.log("3000");
+});
