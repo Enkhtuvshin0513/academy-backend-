@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/Enkhtuvshin0513/academy-backend-/issues"
   },
-  "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme"
+  "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.11"
+  }
 }
