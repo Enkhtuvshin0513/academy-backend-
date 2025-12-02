@@ -3,7 +3,7 @@ export const createTransaction = async (req, res) => {
   const transaction = await createTransaction(
     user_id,
     amount,
-    transaction_type
+    transaction_type,
   );
   res.json(transaction);
 };
@@ -24,4 +24,14 @@ export const getTransactionsByAccountNumber = async (req, res) => {
   const { account_number } = req.query;
   const transactions = await getTransactionsByAccountNumber(account_number);
   res.json(transactions);
+};
+
+export const createAccount = async (req, res) => {
+  const { user_id, account_number, balance } = req.body;
+  res.json({});
+};
+
+export const updateAccount = async (req, res) => {
+  const { id, user_id, account_number, balance } = req.body;
+  res.json({});
 };

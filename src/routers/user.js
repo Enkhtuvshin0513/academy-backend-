@@ -4,9 +4,8 @@ import {
   updateUser,
   getUsers,
   deleteUser,
-  getUserAccounts
+  getUserAccounts,
 } from "../controllers/user.js";
-import { getUsers, getUserAccounts } from "../controllers/user.js";
 
 export const userRouters = new Router();
 
