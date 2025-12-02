@@ -1,15 +1,14 @@
-export const login = (req, res) => {
-  res.cookie("user", "userId123", {
-    httpOnly: true,
-    secure: false
-  });
-  res.json({
-    user: "userId123"
-  });
+export const createUser = async (req, res) => {
+  const { username, email, password, firstname, lastname } = req.body;
+
+  const user = await createUser(username, email, password, firstname, lastname);
+
+  res.json(user);
 };
 
-export const logout = (req, res) => {
-  res.clearCookie("user");
+export const updateUser = (req, res) => {
+  //id ашиглаж user update hiih
+  const { id, username, email, password, firstname, lastname } = req.body;
 
   res.send("Success!");
 };

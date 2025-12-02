@@ -1,12 +1,17 @@
 import { Router } from "express";
+import {
+  createTransaction,
+  getTransactions,
+  getTransactionsByUserId,
+  getTransactionsByAccountNumber
+} from "../controllers/bank.js";
 
 export const bankRouters = new Router();
 
-bankRouters.post("/deposit", (req, res) => {
-  console.log(req.user);
-
-  if (!req.user) {
-    res.send("Newtreigui bn");
-  }
-  res.send("success");
-});
+bankRouters.post("/create-transaction", createTransaction);
+bankRouters.get("/get-transactions", getTransactions);
+bankRouters.get("/get-transactions-by-user-id", getTransactionsByUserId);
+bankRouters.get(
+  "/get-transactions-by-account-number",
+  getTransactionsByAccountNumber
+);
