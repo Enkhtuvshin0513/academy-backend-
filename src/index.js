@@ -1,5 +1,4 @@
 import express from "express";
-import cookieParser from "cookie-parser";
 import { userRouters } from "./routers/user.js";
 import { bankRouters } from "./routers/bank.js";
 import { connectDb } from "./db.js";
@@ -7,13 +6,6 @@ import { connectDb } from "./db.js";
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser());
-
-app.use("/", (req, res, next) => {
-  next();
-});
-
-app.use(express.static("frontend"));
 
 app.use("/user", userRouters);
 app.use("/bank", bankRouters);
