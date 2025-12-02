@@ -5,19 +5,13 @@ import {
   getUserByIdService,
   deleteUserService,
   getUserAccountsService,
-  getUserTransactionsService
+  getUserTransactionsService,
 } from "../services/user.js";
 
 export const createUser = async (req, res) => {
-  const { username, email, password, firstname, lastname } = req.body;
+  const { username, email, password } = req.body;
 
-  const user = await createUserService(
-    username,
-    email,
-    password,
-    firstname,
-    lastname
-  );
+  const user = await createUserService(username, email, password);
 
   res.json(user);
 };
@@ -31,7 +25,7 @@ export const updateUser = async (req, res) => {
     email,
     password,
     firstname,
-    lastname
+    lastname,
   );
 
   res.json(user);

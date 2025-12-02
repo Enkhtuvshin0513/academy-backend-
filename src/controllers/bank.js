@@ -1,6 +1,7 @@
 // Шинэ данс үүсгэх
 export const createAccount = async (req, res) => {
   const { user_id, account_number, balance } = req.body;
+
   res.json({});
 };
 
@@ -57,10 +58,12 @@ export const getTransactionsByUserId = async (req, res) => {
   res.json(transactions);
 };
 
-// Дансны дугаараар гүйлгээ авах
-
 export const getTransactionsByAccountNumber = async (req, res) => {
   const { account_number } = req.query;
   const transactions = await getTransactionsByAccountNumber(account_number);
   res.json(transactions);
 };
+
+export const deleteTransaction = async (req, res) => {};
+
+export const updateTransaction = async (req, res) => {};
