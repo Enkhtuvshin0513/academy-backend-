@@ -3,19 +3,30 @@ import {
   createTransaction,
   getTransactions,
   getTransactionsByAccountNumber,
+  createAccount,
+  updateAccount,
+  deleteAccount,
+  getAllAccounts,
+  getAccountByNumber,
+  updateTransaction,
+  deleteTransaction,
 } from "../controllers/bank.js";
-import { createAccount, updateAccount } from "../controllers/bank.js";
+
 export const bankRouters = new Router();
 
-//danstai holbootoi route uud
+// Account-related
+bankRouters.get("/accounts", getAllAccounts);
+bankRouters.get("/accounts/:accountNumber", getAccountByNumber);
+bankRouters.post("/accounts", createAccount);
+bankRouters.put("/accounts/:accountNumber", updateAccount);
+bankRouters.delete("/accounts/:accountNumber", deleteAccount);
 
-bankRouters.post("/create-account", createAccount);
-bankRouters.post("/update-account", updateAccount);
-
-// danstai holbootoi get route uud
-
-bankRouters.get("/", getTransactions);
+// Transaction-related
+bankRouters.get("/transactions", getTransactions);
 bankRouters.get(
-  "/get-transactions-by-account-number",
+  "/accounts/:accountNumber/transactions",
   getTransactionsByAccountNumber,
 );
+bankRouters.post("/transactions", createTransaction);
+bankRouters.put("/transactions/:transactionId", updateTransaction);
+bankRouters.delete("/transactions/:transactionId", deleteTransaction);
