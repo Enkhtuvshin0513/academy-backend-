@@ -1,0 +1,27 @@
+{
+  "name": "academy-backend-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enkhtuvshin0513/academy-backend-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Enkhtuvshin0513/academy-backend-/issues"
+  },
+  "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2"
+  }
+}
