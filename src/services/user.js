@@ -1,9 +1,15 @@
 import { db } from "../db.js";
-
+import bcrypt from "bcrypt";
+export const getUserByEmailService = async (email) => {
+  const res = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+  return res.rows[0];
+};
 export const createUserService = async (username, email, password) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const response = await db.query(
     `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *`,
-    [username, email, password],
+    [username, email, hashedPassword],
   );
   return response.rows[0];
 };

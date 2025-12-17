@@ -1,6 +1,7 @@
 import express from "express";
 import { userRouters } from "./routers/user.js";
 import { bankRouters } from "./routers/bank.js";
+import { authRouters } from "./routers/auth.js";
 import { connectDb } from "./db.js";
 
 const app = express();
@@ -9,7 +10,7 @@ app.use(express.json());
 
 app.use("/user", userRouters);
 app.use("/bank", bankRouters);
-
+app.use("/auth", authRouters);
 await connectDb();
 
 app.listen(3000, () => {
