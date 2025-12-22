@@ -1,18 +1,36 @@
-import express from "express";
-import { userRouters } from "./routers/user.js";
-import { bankRouters } from "./routers/bank.js";
-import { authRouters } from "./routers/auth.js";
-import { connectDb } from "./db.js";
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const app = express();
+app.use(bodyParser.json());
 
-app.use(express.json());
-
-app.use("/user", userRouters);
-app.use("/bank", bankRouters);
-app.use("/auth", authRouters);
-await connectDb();
-
-app.listen(3000, () => {
-  console.log("express app running at 3000");
+// MongoDB connection
+mongoose.connect("mongodb://localhost:27017/testdb", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
+
+// Schema and Model
+const StudentSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+});
+const Student = mongoose.model("Student", StudentSchema);
+
+// REST API Endpoints
+// GET all students
+app.get("/students", async (req, res) => {
+  const students = await Student.find();
+  res.json(students);
+});
+
+// POST new student
+app.post("/students", async (req, res) => {
+  const student = new Student(req.body);
+  await student.save();
+  res.json(student);
+});
+
+// Start server
+app.listen(3000, () => console.log("Server running on port 3000"));
