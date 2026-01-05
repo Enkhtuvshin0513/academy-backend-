@@ -1,9 +1,11 @@
 import { Movies } from "../db/models.ts";
+import { type IContext } from "../../index.ts";
 
 export const movieQueries = {
   movies: async (
     _root: any,
-    { title, page }: { title: string; page: number }
+    { title, page }: { title: string; page: number },
+    { user }: IContext
   ) => {
     const perPage = 20;
     const skip = (page - 1) * perPage;

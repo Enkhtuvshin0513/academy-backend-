@@ -14,13 +14,26 @@ mongoose
     console.error("MongoDB connection error:", err);
   });
 
-const server = new ApolloServer({
+export interface IContext {
+  user: {
+    firstname: string;
+  };
+}
+
+const server = new ApolloServer<IContext>({
   typeDefs,
   resolvers
 });
 
 const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 }
+  listen: { port: 4000 },
+  context: async ({ req, res }) => {
+    return {
+      user: {
+        firstname: "bat"
+      }
+    };
+  }
 });
 
 console.log(`🚀  Server ready at: ${url}`);

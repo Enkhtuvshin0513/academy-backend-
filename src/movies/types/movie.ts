@@ -36,4 +36,6 @@ export interface IMovie {
   tomatoes: ITomateos;
 }
 
-export interface IMoviesDocument extends IMovie, Document {}
+export interface IMoviesDocument extends IMovie, Document {
+  title: string;
+}

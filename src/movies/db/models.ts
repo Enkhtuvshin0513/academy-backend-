@@ -1,5 +1,8 @@
 import { Schema, model } from "mongoose";
-import { ITomatoesDocument, IMoviesDocument } from "../types/movie.ts";
+import {
+  type ITomatoesDocument,
+  type IMoviesDocument
+} from "../types/movie.ts";
 
 const TomatoesSchema: Schema<ITomatoesDocument> = new Schema(
   {
