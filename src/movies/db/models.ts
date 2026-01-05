@@ -1,40 +1,7 @@
-import { Document, Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
+import { ITomatoesDocument, IMoviesDocument } from "../types/movie.ts";
 
-interface IRating {
-  rating: number;
-  numReviews: number;
-  meter: number;
-}
-
-interface ITomatoes extends Document {
-  viewer: IRating;
-  fresh?: number;
-  critic?: IRating;
-  rotten?: number;
-  lastUpdated?: Date;
-}
-
-export interface IMoviesDocument extends Document {
-  title: string;
-  year: number;
-  plot: string;
-  genre: string[];
-  runtime: number;
-  cast: string[];
-  poster: string;
-  fullpolt: string;
-  relased: Date;
-  languages: string[];
-  directors: string[];
-  awards: {
-    wins: number;
-    nominations: number;
-    text: string;
-  };
-  tomatoes: ITomatoes;
-}
-
-const TomatoesSchema: Schema<ITomatoes> = new Schema(
+const TomatoesSchema: Schema<ITomatoesDocument> = new Schema(
   {
     viewer: {
       rating: { type: Number },
