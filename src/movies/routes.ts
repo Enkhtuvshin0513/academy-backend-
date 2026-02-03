@@ -12,7 +12,7 @@ movieRouter.get("/movies", async (req: Request, res: Response) => {
     query.genres = genre;
   }
 
-  const movies = await Movies.find({ genres: genre }).limit(100);
+  const movies = await Movies.find(query).limit(100);
 
   res.json(movies);
 });
