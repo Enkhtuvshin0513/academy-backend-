@@ -1,55 +1,32 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-import mongoose from "mongoose";
-import { typeDefs, resolvers } from "./apolloServer.ts";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+import "./config/env.js"; // Validate env first
+import { env } from "./config/env.js";
+import app from "./app.js";
+import { prisma } from "./lib/prisma.js";
 
-mongoose
-  .connect(
-    "mongodb+srv://suuganbayr948_db_user:N8BpLF3xuTy1jdke@test-academy.zoomdjw.mongodb.net/sample_mflix/movies",
-  )
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((err: Error) => {
-    console.error("MongoDB connection error:", err);
+async function bootstrap() {
+  // Verify DB connection
+  await prisma.$connect();
+  console.log("Database connected");
+
+  const server = app.listen(env.PORT, () => {
+    console.log(`Server running on http://localhost:${env.PORT} [${env.NODE_ENV}]`);
   });
 
-export interface IContext {
-  user: {
-    _id: string;
-    name: string;
-    email: string;
-  } | null;
+  // Graceful shutdown
+  const shutdown = async (signal: string) => {
+    console.log(`\n${signal} received — shutting down gracefully`);
+    server.close(async () => {
+      await prisma.$disconnect();
+      console.log("Database disconnected. Server closed.");
+      process.exit(0);
+    });
+  };
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT",  () => shutdown("SIGINT"));
 }
 
-const server = new ApolloServer<IContext>({
-  typeDefs,
-  resolvers,
+bootstrap().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
 });
-
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 2000 },
-  context: async ({ req }) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-      return { user: null };
-    }
-
-    try {
-      const token = authHeader.replace("Bearer ", "");
-      const decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET || "secret",
-      ) as IContext["user"];
-
-      return { user: decoded };
-    } catch {
-      return { user: null };
-    }
-  },
-});
-
-console.log(`🚀  Server ready at: ${url}`);
