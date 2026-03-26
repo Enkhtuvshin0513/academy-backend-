@@ -35,13 +35,7 @@ router.get(
   userController.getById
 );
 
-router.patch(
-  "/users/:id",
-  authenticate,
-  validateWithDetails(idParamSchema, "params"),
-  validateWithDetails(updateUserSchema),
-  userController.update
-);
+
 
 router.delete(
   "/users/:id",
