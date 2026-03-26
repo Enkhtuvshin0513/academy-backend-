@@ -26,5 +26,7 @@ export const movieQueryTypeDefs = `
 `;
 
 export const movieMutationTypeDefs = `
- addMovie(input: MovieInput): String
+  addMovie(input: MovieInput): String
+  updateMovie(_id: ID!, input: MovieInput): String
+  deleteMovie(_id: ID!): String
 `;

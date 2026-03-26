@@ -7,6 +7,10 @@ export const movieQueries = {
     { title, page }: { title: string; page: number },
     { user }: IContext
   ) => {
+
+    if(!user) {
+      throw new Error("Unauthorized");
+    }
     const perPage = 20;
     const skip = (page - 1) * perPage;
 

@@ -2,10 +2,12 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import mongoose from "mongoose";
 import { typeDefs, resolvers } from "./apolloServer.ts";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 mongoose
   .connect(
-    "mongodb+srv://enkhtuvshinej_db_user:7aLod5Z9aBfk23pu@backend-lesson.pfxqeun.mongodb.net/sample_mflix?appName=backend-lesson"
+    "mongodb+srv://suuganbayr948_db_user:N8BpLF3xuTy1jdke@test-academy.zoomdjw.mongodb.net/sample_mflix/movies",
   )
   .then(() => {
     console.log("MongoDB connected");
@@ -16,24 +18,38 @@ mongoose
 
 export interface IContext {
   user: {
-    firstname: string;
-  };
+    _id: string;
+    name: string;
+    email: string;
+  } | null;
 }
 
 const server = new ApolloServer<IContext>({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
-  context: async ({ req, res }) => {
-    return {
-      user: {
-        firstname: "bat"
-      }
-    };
-  }
+  listen: { port: 2000 },
+  context: async ({ req }) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return { user: null };
+    }
+
+    try {
+      const token = authHeader.replace("Bearer ", "");
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET || "secret",
+      ) as IContext["user"];
+
+      return { user: decoded };
+    } catch {
+      return { user: null };
+    }
+  },
 });
 
 console.log(`🚀  Server ready at: ${url}`);
