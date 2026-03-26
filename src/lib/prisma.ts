@@ -1,4 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { PrismaClient } from "../../generated/prisma/client.js";
 
-// Create one shared Prisma instance for the whole app
-export const prisma = new PrismaClient();
+const prisma = new PrismaClient();
+
+export { prisma };
