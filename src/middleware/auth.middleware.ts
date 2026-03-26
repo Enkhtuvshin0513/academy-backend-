@@ -1,53 +1,50 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { env } from "../config/env.js";
-import { ApiError } from "../utils/ApiError.js";
 
-export interface JwtPayload {
-  userId: string;
-  email: string;
-  role: string;
-}
-
-// Extend Express Request type
+// Add `user` property to every Express request
 declare global {
   namespace Express {
     interface Request {
-      user?: JwtPayload;
+      user?: { userId: string; email: string; role: string };
     }
   }
 }
 
-export function authenticate(req: Request, _res: Response, next: NextFunction) {
+// Check if the user is logged in (has a valid token)
+export function authenticate(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader?.startsWith("Bearer ")) {
-    return next(ApiError.unauthorized("No token provided"));
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    res.status(401).json({ success: false, message: "No token provided" });
+    return;
   }
 
-  const token = authHeader.split(" ")[1];
-
-  if (!token) {
-    return next(ApiError.unauthorized("No token provided"));
-  }
+  const token = authHeader.split(" ")[1]!;
 
   try {
-    const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
+    const payload = jwt.verify(token, process.env["JWT_SECRET"]!) as {
+      userId: string;
+      email: string;
+      role: string;
+    };
     req.user = payload;
-    return next();
+    next();
   } catch {
-    return next(ApiError.unauthorized("Invalid or expired token"));
+    res.status(401).json({ success: false, message: "Invalid or expired token" });
   }
 }
 
+// Check if the user has the required role (e.g. "ADMIN")
 export function authorize(...roles: string[]) {
-  return (req: Request, _res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      return next(ApiError.unauthorized());
+      res.status(401).json({ success: false, message: "Not authenticated" });
+      return;
     }
     if (!roles.includes(req.user.role)) {
-      return next(ApiError.forbidden("Insufficient permissions"));
+      res.status(403).json({ success: false, message: "Access denied" });
+      return;
     }
-    return next();
+    next();
   };
 }
